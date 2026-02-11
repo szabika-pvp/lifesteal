@@ -2,3 +2,7 @@ name: lifesteal
 version: '1.0'
 main: hu.szatomi.lifesteal.Lifesteal
 api-version: '1.21'
+commands:
+  lifestealreload:
+    description: Újraindítja a lifesteal configot
+    permission: lifesteal.admin
