@@ -1,0 +1,4 @@
+name: lifesteal
+version: '1.0'
+main: hu.szatomi.lifesteal.Lifesteal
+api-version: '1.21'
