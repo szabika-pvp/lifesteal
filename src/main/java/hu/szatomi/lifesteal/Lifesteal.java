@@ -1,5 +1,6 @@
 package hu.szatomi.lifesteal;
 
+import hu.szatomi.lifesteal.Listeners.BannedItemsListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Lifesteal extends JavaPlugin {
@@ -10,6 +11,8 @@ public final class Lifesteal extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         saveDefaultConfig();
+
+        getServer().getPluginManager().registerEvents(new BannedItemsListener(), this);
         
         this.lockManager = new DimensionLockManager(this);
         getServer().getPluginManager().registerEvents(new DimensionListener(lockManager), this);
