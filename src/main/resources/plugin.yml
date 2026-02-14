@@ -6,3 +6,7 @@ commands:
   lifestealreload:
     description: Újraindítja a lifesteal configot
     permission: lifesteal.admin
+  hearts:
+    description: Egy player szíveit kezeli
+    usage: /hearts <add|set|remove> <player> <amount>
+    permission: lifesteal.admin

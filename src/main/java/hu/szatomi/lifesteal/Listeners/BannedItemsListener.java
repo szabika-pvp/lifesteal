@@ -9,29 +9,17 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class BannedItemsListener implements Listener {
 
     @EventHandler
-    public void onBedInteract(PlayerInteractEvent event) {
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
-
-        if (event.getClickedBlock() == null || !Tag.BEDS.isTagged(event.getClickedBlock().getType()))
-            return;
-        if (event.getPlayer().getWorld().getEnvironment() != World.Environment.NETHER)
-            return;
-
-        boolean isSneaking = event.getPlayer().isSneaking();
-        ItemStack itemInHand = event.getItem();
-        boolean isBlockInHand = (itemInHand != null && itemInHand.getType().isBlock());
-
-        if (isSneaking && isBlockInHand) {
-            return;
+    public void cancelBed(PlayerBedEnterEvent event) {
+        if (event.getPlayer().getWorld().getEnvironment() == World.Environment.NETHER || event.getPlayer().getWorld().getEnvironment() == World.Environment.THE_END) {
+            event.setCancelled(true);
         }
-
-        event.setCancelled(true);
     }
 
     @EventHandler
