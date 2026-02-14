@@ -1,5 +1,6 @@
 package hu.szatomi.lifesteal;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -22,14 +23,13 @@ public class DimensionListener implements Listener {
         World targetWorld = event.getTo().getWorld();
         if (lockManager.isLocked(targetWorld)) {
             event.setCancelled(true);
-            event.getPlayer().sendMessage(lockManager.getLockedMessage(targetWorld));
+            event.getPlayer().sendActionBar(Component.text(lockManager.getLockedMessage(targetWorld)).color(Colors.RED));
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onTeleport(PlayerTeleportEvent event) {
-        if (event.getTo() == null) return;
-        
+
         World fromWorld = event.getFrom().getWorld();
         World toWorld = event.getTo().getWorld();
         
@@ -38,7 +38,7 @@ public class DimensionListener implements Listener {
 
         if (lockManager.isLocked(toWorld)) {
             event.setCancelled(true);
-            event.getPlayer().sendMessage(lockManager.getLockedMessage(toWorld));
+            event.getPlayer().sendActionBar(Component.text(lockManager.getLockedMessage(toWorld)).color(Colors.RED));
         }
     }
 }

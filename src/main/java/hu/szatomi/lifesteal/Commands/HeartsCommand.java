@@ -1,7 +1,9 @@
 package hu.szatomi.lifesteal.Commands;
 
+import hu.szatomi.lifesteal.Colors;
 import hu.szatomi.lifesteal.Lifesteal;
 import hu.szatomi.lifesteal.MessageTemplate;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
@@ -30,7 +32,7 @@ public class HeartsCommand implements TabExecutor {
         }
 
         if (args.length < 3) {
-            sender.sendMessage(ChatColor.RED + "Használat: /hearts <add|set|remove> <player> <amount>");
+            sender.sendMessage(Component.text("Használat: /hearts <add|set|remove> <player> <amount>").color(Colors.RED));
             return true;
         }
 
@@ -48,7 +50,7 @@ public class HeartsCommand implements TabExecutor {
         try {
             amount = Integer.parseInt(amountStr);
         } catch (NumberFormatException e) {
-            sender.sendMessage(ChatColor.RED + "Érvénytelen érték, kérlek számot adj meg");
+            sender.sendMessage(Component.text("Érvénytelen érték, kérlek számot adj meg").color(Colors.RED));
             return true;
         }
         
@@ -57,7 +59,7 @@ public class HeartsCommand implements TabExecutor {
 
         AttributeInstance maxHealthAttribute = target.getAttribute(Attribute.MAX_HEALTH);
         if (maxHealthAttribute == null) {
-            sender.sendMessage(ChatColor.RED + "A player 'MAX_HEALTH'-je nem elérhető");
+            sender.sendMessage(Component.text("A player 'MAX_HEALTH'-je nem elérhető").color(Colors.RED));
             return true;
         }
 
@@ -71,31 +73,31 @@ public class HeartsCommand implements TabExecutor {
         switch (action) {
             case "add":
                 newMaxHealth = currentMaxHealth + healthAmount;
-                sender.sendMessage(ChatColor.GREEN + String.valueOf(amount) + " szív adva " + target.getName() + " játékosnak");
+                sender.sendMessage(Component.text(amount + " szív adva " + target.getName() + " játékosnak").color(Colors.GREEN));
                 break;
             case "set":
                 newMaxHealth = healthAmount;
-                sender.sendMessage(ChatColor.GREEN + target.getName() + " játékos szívei beállítva " + amount + " szívre");
+                sender.sendMessage(Component.text(target.getName() + " játékos szívei beállítva " + amount + " szívre").color(Colors.GREEN));
                 break;
             case "remove":
                 newMaxHealth = currentMaxHealth - healthAmount;
-                sender.sendMessage(ChatColor.GREEN + String.valueOf(amount) + " szív elvéve " + target.getName() + " játékostól");
+                sender.sendMessage(Component.text(amount + " szív elvéve " + target.getName() + " játékostól").color(Colors.GREEN));
                 break;
             default:
-                sender.sendMessage(ChatColor.RED + "Ismeretlen parancs: " + action);
+                sender.sendMessage(Component.text("Ismeretlen parancs: " + action).color(Colors.RED));
                 return true;
         }
 
         // Apply min cap (1 heart / 2 HP)
         if (newMaxHealth < 2.0) {
             newMaxHealth = 2.0; 
-            sender.sendMessage(ChatColor.YELLOW + "Az szívek száma túl alacsony, ezért a minimumra (1) lett állítva.");
+            sender.sendMessage(Component.text("Az szívek száma túl alacsony, ezért a minimumra (1) lett állítva.").color(Colors.YELLOW));
         }
         
         // Apply max cap from config
         if (newMaxHealth > maxHealthCap) {
             newMaxHealth = maxHealthCap;
-            sender.sendMessage(ChatColor.YELLOW + "Az szívek száma elérte a maximumot (" + configMaxHearts + "), ezért arra lett állítva.");
+            sender.sendMessage(Component.text("Az szívek száma elérte a maximumot (" + configMaxHearts + "), ezért arra lett állítva.").color(Colors.YELLOW));
         }
 
         maxHealthAttribute.setBaseValue(newMaxHealth);
