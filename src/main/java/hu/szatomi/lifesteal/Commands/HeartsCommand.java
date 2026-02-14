@@ -91,7 +91,7 @@ public class HeartsCommand implements TabExecutor {
         // Apply min cap (1 heart / 2 HP)
         if (newMaxHealth < 2.0) {
             newMaxHealth = 2.0; 
-            sender.sendMessage(Component.text("Az szívek száma túl alacsony, ezért a minimumra (1) lett állítva.").color(Colors.YELLOW));
+            sender.sendMessage(Component.text("Az szívek száma elérte a minimumot (1), ezért arra lett állítva.").color(Colors.YELLOW));
         }
         
         // Apply max cap from config
