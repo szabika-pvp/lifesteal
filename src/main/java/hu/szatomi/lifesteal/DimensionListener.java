@@ -18,7 +18,6 @@ public class DimensionListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPortal(PlayerPortalEvent event) {
-        if (event.getTo() == null) return;
         
         World targetWorld = event.getTo().getWorld();
         if (lockManager.isLocked(targetWorld)) {

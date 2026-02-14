@@ -1,6 +1,7 @@
 package hu.szatomi.lifesteal.Listeners;
 
-import org.bukkit.ChatColor;
+import hu.szatomi.lifesteal.Colors;
+import net.kyori.adventure.text.Component;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
@@ -22,6 +23,6 @@ public class PlayerDeathListener implements Listener {
         double newMaxHealth = currentMaxHealth - 2.0;
 
         maxHealthAttribute.setBaseValue(newMaxHealth);
-        player.sendMessage(ChatColor.RED + "You have lost a heart!");
+        player.sendMessage(Component.text("Elvesztettél egy szívet!").color(Colors.RED));
     }
 }

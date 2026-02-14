@@ -7,8 +7,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Lifesteal extends JavaPlugin {
 
-    private DimensionLockManager lockManager;
-
     @Override
     public void onEnable() {
 
@@ -16,8 +14,8 @@ public final class Lifesteal extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new BannedItemsListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
-        
-        this.lockManager = new DimensionLockManager(this);
+
+        DimensionLockManager lockManager = new DimensionLockManager(this);
         getServer().getPluginManager().registerEvents(new DimensionListener(lockManager), this);
         
         if (getCommand("lifestealreload") != null) {

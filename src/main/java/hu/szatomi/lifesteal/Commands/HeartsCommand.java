@@ -5,13 +5,13 @@ import hu.szatomi.lifesteal.Lifesteal;
 import hu.szatomi.lifesteal.MessageTemplate;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class HeartsCommand implements TabExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (!sender.isOp()) {
             sender.sendMessage(MessageTemplate.NO_PERMISSION);
             return true;
@@ -64,7 +64,7 @@ public class HeartsCommand implements TabExecutor {
         }
 
         double currentMaxHealth = maxHealthAttribute.getBaseValue();
-        double newMaxHealth = currentMaxHealth;
+        double newMaxHealth;
         
         // Get max hearts from config (default 20), convert to HP
         int configMaxHearts = plugin.getConfig().getInt("max_hearts", 20);
@@ -106,7 +106,7 @@ public class HeartsCommand implements TabExecutor {
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         List<String> completions = new ArrayList<>();
 
         if (args.length == 1) {

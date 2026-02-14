@@ -1,7 +1,6 @@
 package hu.szatomi.lifesteal.Listeners;
 
 import org.bukkit.Material;
-import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.entity.EnderCrystal;
 import org.bukkit.event.EventHandler;
