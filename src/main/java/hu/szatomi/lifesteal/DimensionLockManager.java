@@ -29,8 +29,8 @@ public class DimensionLockManager {
         this.netherUnlockTime = parseDate(config.getString("dimensions.nether.unlock-date"));
         this.endUnlockTime = parseDate(config.getString("dimensions.the_end.unlock-date"));
         
-        this.netherMessage = config.getString("dimensions.nether.locked-message", "§cThe Nether is locked!");
-        this.endMessage = config.getString("dimensions.the_end.locked-message", "§cThe End is locked!");
+        this.netherMessage = config.getString("dimensions.nether.locked-message", "A Nether le van zárva!");
+        this.endMessage = config.getString("dimensions.the_end.locked-message", "§Az End le van zárva!");
     }
 
     private LocalDateTime parseDate(String dateStr) {

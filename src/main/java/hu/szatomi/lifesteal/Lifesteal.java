@@ -1,7 +1,9 @@
 package hu.szatomi.lifesteal;
 
 import hu.szatomi.lifesteal.Commands.HeartsCommand;
+import hu.szatomi.lifesteal.Commands.ReloadCommand;
 import hu.szatomi.lifesteal.Listeners.BannedItemsListener;
+import hu.szatomi.lifesteal.Listeners.DimensionListener;
 import hu.szatomi.lifesteal.Listeners.PlayerDeathListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -12,7 +14,7 @@ public final class Lifesteal extends JavaPlugin {
 
         saveDefaultConfig();
 
-        getServer().getPluginManager().registerEvents(new BannedItemsListener(), this);
+        getServer().getPluginManager().registerEvents(new BannedItemsListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
 
         DimensionLockManager lockManager = new DimensionLockManager(this);

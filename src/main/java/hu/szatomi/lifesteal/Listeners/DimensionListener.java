@@ -1,5 +1,7 @@
-package hu.szatomi.lifesteal;
+package hu.szatomi.lifesteal.Listeners;
 
+import hu.szatomi.lifesteal.Colors;
+import hu.szatomi.lifesteal.DimensionLockManager;
 import net.kyori.adventure.text.Component;
 import org.bukkit.World;
 import org.bukkit.event.EventHandler;

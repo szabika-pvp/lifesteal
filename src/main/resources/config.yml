@@ -1,10 +1,17 @@
-# Dimension Unlock Configuration
 # Date format: YYYY-MM-DD HH:mm:ss
+
 max_hearts: 20
+
+restrictions:
+  block-bed-explosions: true
+  block-anchor-explosions: true
+  block-crystal-explosions: true
+  disable-totems: true
+
 dimensions:
   nether:
     unlock-date: "2026-03-02 16:00:00"
-    locked-message: "A Nether le van zárva! Megnyílik: 2026. 03. 22. 16:00."
+    locked-message: "A Nether le van zárva!"
   the_end:
     unlock-date: "2026-03-14 10:00:00"
-    locked-message: "Az End le van zárva! Megnyílik: 2026. 03. 14. 10:00."
+    locked-message: "Az End le van zárva!"
