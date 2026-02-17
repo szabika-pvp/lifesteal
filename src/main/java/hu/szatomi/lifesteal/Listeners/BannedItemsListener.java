@@ -4,6 +4,7 @@ import hu.szatomi.lifesteal.Lifesteal;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.EnderCrystal;
+import org.bukkit.entity.minecart.ExplosiveMinecart;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,6 +22,35 @@ public class BannedItemsListener implements Listener {
 
     public BannedItemsListener(Lifesteal plugin) {
         this.plugin = plugin;
+    }
+
+    @EventHandler
+    public void onDamage(EntityDamageByEntityEvent event) {
+
+        // Ender Crystal damage limit
+        if (plugin.getConfig().getBoolean("restrictions.block-crystal-explosions", true) && event.getDamager() instanceof EnderCrystal) {
+            event.setCancelled(true);
+            return;
+        }
+
+        // Mace limit
+        if (event.getDamager() instanceof Player player) {
+            ItemStack itemInHand = player.getInventory().getItemInMainHand();
+            if (itemInHand.getType() == Material.MACE) {
+                double maxDamage = plugin.getConfig().getDouble("restrictions.mace-max-damage", 16.0);
+                if (event.getDamage() > maxDamage) {
+                    event.setDamage(maxDamage);
+                }
+            }
+        }
+
+        // TNT Minecart limit
+        if (event.getDamager() instanceof ExplosiveMinecart) {
+            double maxDamage = plugin.getConfig().getDouble("restrictions.tnt-minecart-max-damage", 18.0);
+            if (event.getDamage() > maxDamage) {
+                event.setDamage(maxDamage);
+            }
+        }
     }
 
     @EventHandler
@@ -63,15 +93,6 @@ public class BannedItemsListener implements Listener {
 
             // Opcionális: Ha a robbanás hangját/effektjét is teljesen el akarod tüntetni:
             // event.setCancelled(true);
-        }
-    }
-
-    @EventHandler
-    public void onCrystalDamage(EntityDamageByEntityEvent event) {
-        if (!plugin.getConfig().getBoolean("restrictions.block-crystal-explosions", true)) return;
-
-        if (event.getDamager() instanceof EnderCrystal) {
-            event.setCancelled(true);
         }
     }
 
