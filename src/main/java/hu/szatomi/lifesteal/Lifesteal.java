@@ -16,7 +16,7 @@ public final class Lifesteal extends JavaPlugin {
         saveDefaultConfig();
 
         getServer().getPluginManager().registerEvents(new BannedItemsListener(this), this);
-        getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerDeathListener(this), this);
         getServer().getPluginManager().registerEvents(new CombatLogListener(this), this);
 
         DimensionLockManager lockManager = new DimensionLockManager(this);
