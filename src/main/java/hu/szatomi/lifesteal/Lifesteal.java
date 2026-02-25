@@ -1,6 +1,7 @@
 package hu.szatomi.lifesteal;
 
 import hu.szatomi.lifesteal.Commands.HeartsCommand;
+import hu.szatomi.lifesteal.Commands.HealCommand;
 import hu.szatomi.lifesteal.Commands.ReloadCommand;
 import hu.szatomi.lifesteal.Listeners.BannedItemsListener;
 import hu.szatomi.lifesteal.Listeners.CombatLogListener;
@@ -28,6 +29,12 @@ public final class Lifesteal extends JavaPlugin {
         
         if (getCommand("hearts") != null) {
             getCommand("hearts").setExecutor(new HeartsCommand(this));
+        }
+
+        if (getCommand("heal") != null) {
+            HealCommand healCommand = new HealCommand();
+            getCommand("heal").setExecutor(healCommand);
+            getCommand("heal").setTabCompleter(healCommand);
         }
         
         getLogger().info("LIFESTEAL PLUGIN BEKAPCSOLVA.");

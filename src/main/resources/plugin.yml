@@ -10,3 +10,7 @@ commands:
     description: Egy player szíveit kezeli
     usage: /hearts <add|set|remove> <player> <amount>
     permission: lifesteal.admin
+  heal:
+    description: Meggyógyítja a játékost
+    usage: /heal [player]
+    permission: lifesteal.admin
