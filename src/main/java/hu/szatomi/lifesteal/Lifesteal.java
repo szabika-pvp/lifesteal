@@ -3,6 +3,9 @@ package hu.szatomi.lifesteal;
 import hu.szatomi.lifesteal.Commands.HeartsCommand;
 import hu.szatomi.lifesteal.Commands.HealCommand;
 import hu.szatomi.lifesteal.Commands.ReloadCommand;
+import hu.szatomi.lifesteal.Commands.WithdrawCommand;
+import hu.szatomi.lifesteal.Items.HeartItem;
+import hu.szatomi.lifesteal.Items.HeartListener;
 import hu.szatomi.lifesteal.Listeners.BannedItemsListener;
 import hu.szatomi.lifesteal.Listeners.CombatLogListener;
 import hu.szatomi.lifesteal.Listeners.DimensionListener;
@@ -19,9 +22,13 @@ public final class Lifesteal extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BannedItemsListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(this), this);
         getServer().getPluginManager().registerEvents(new CombatLogListener(this), this);
+        getServer().getPluginManager().registerEvents(new HeartListener(this), this);
 
         DimensionLockManager lockManager = new DimensionLockManager(this);
         getServer().getPluginManager().registerEvents(new DimensionListener(lockManager), this);
+
+        HeartItem heartItem = new HeartItem(this);
+        heartItem.registerRecipe();
         
         if (getCommand("lifestealreload") != null) {
             getCommand("lifestealreload").setExecutor(new ReloadCommand(this, lockManager));
@@ -35,6 +42,12 @@ public final class Lifesteal extends JavaPlugin {
             HealCommand healCommand = new HealCommand();
             getCommand("heal").setExecutor(healCommand);
             getCommand("heal").setTabCompleter(healCommand);
+        }
+
+        if (getCommand("withdraw") != null) {
+            WithdrawCommand withdrawCommand = new WithdrawCommand(this);
+            getCommand("withdraw").setExecutor(withdrawCommand);
+            getCommand("withdraw").setTabCompleter(withdrawCommand);
         }
         
         getLogger().info("LIFESTEAL PLUGIN BEKAPCSOLVA.");

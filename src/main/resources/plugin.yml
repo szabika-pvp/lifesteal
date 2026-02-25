@@ -14,3 +14,6 @@ commands:
     description: Meggyógyítja a játékost
     usage: /heal [player]
     permission: lifesteal.admin
+  withdraw:
+    description: Szívek kivonása tárgyként
+    usage: /withdraw [amount]

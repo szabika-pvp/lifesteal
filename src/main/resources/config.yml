@@ -2,6 +2,12 @@
 
 max_hearts: 20
 
+recipes:
+  heart:
+    row1: ["NAUTILUS_SHELL", "NETHERITE_INGOT", "NAUTILUS_SHELL"]
+    row2: ["NETHERITE_INGOT", "OMINOUS_TRIAL_KEY", "NETHERITE_INGOT"]
+    row3: ["NAUTILUS_SHELL", "NETHERITE_INGOT", "NAUTILUS_SHELL"]
+
 restrictions:
   block-bed-explosions: true
   block-anchor-explosions: true
