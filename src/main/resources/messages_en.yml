@@ -1,0 +1,39 @@
+# General
+no_permission: "&cYou don't have permission for this"
+player_not_found: "&cPlayer not found"
+command_player_only: "&cThis command can only be used by players"
+invalid_number: "&cInvalid number"
+usage_hearts: "&cUsage: /hearts <add|set|remove> <player> <amount>"
+
+# Dimension Locking
+dimension_locked_nether: "&cThe Nether is locked"
+dimension_locked_end: "&cThe End is locked"
+dimension_locked_title: "&cThis dimension is locked"
+
+# Hearts Command
+hearts_max_health_unavailable: "&cPlayer's MAX_HEALTH is unavailable"
+hearts_added: "&a{amount} hearts added to {player}"
+hearts_set: "&a{player}'s hearts set to {amount}"
+hearts_removed: "&a{amount} hearts removed from {player}"
+hearts_unknown_subcommand: "&cUnknown subcommand: {subcommand}"
+hearts_min_limit: "&eHeart count reached minimum (1), so it was set to that"
+hearts_max_limit: "&eHeart count reached maximum ({max}), so it was set to that"
+
+# Withdraw Command
+withdraw_amount_positive: "&cAmount must be greater than 0"
+withdraw_limit_error: "&cYou cannot withdraw this many hearts! You must have at least 1 heart left"
+withdraw_success: "&aSuccessfully withdrew {amount} hearts"
+
+# Reload Command
+reload_success: "&aConfiguration reloaded"
+
+# Combat Log
+combat_start: "&cYou are in combat!"
+combat_end: "&aYou are no longer in combat!"
+
+# Player Death
+death_loss: "&cYou lost a heart"
+death_gain: "&aYou gained a heart"
+
+# Heart Item
+heart_consumed: "&a+1 heart"

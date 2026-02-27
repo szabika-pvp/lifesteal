@@ -1,0 +1,39 @@
+# General
+no_permission: "&cErre nincs engedélyed"
+player_not_found: "&cNem található ez a játékos"
+command_player_only: "&cEzt a parancsot csak játékos használhatja"
+invalid_number: "&cÉrvénytelen érték, kérlek számot adj meg"
+usage_hearts: "&cHasználat: /hearts <add|set|remove> <player> <amount>"
+
+# Dimension Locking
+dimension_locked_nether: "&cA Nether le van zárva"
+dimension_locked_end: "&cAz End le van zárva"
+dimension_locked_title: "&cEz a dimenzió le van zárva"
+
+# Hearts Command
+hearts_max_health_unavailable: "&cA player 'MAX_HEALTH'-je nem elérhető"
+hearts_added: "&a{amount} szív adva {player} játékosnak"
+hearts_set: "&a{player} játékos szívei beállítva {amount} szívre"
+hearts_removed: "&a{amount} szív elvéve {player} játékostól"
+hearts_unknown_subcommand: "&cIsmeretlen parancs: {subcommand}"
+hearts_min_limit: "&eA szívek száma elérte a minimumot (1), ezért arra lett állítva"
+hearts_max_limit: "&eA szívek száma elérte a maximumot ({max}), ezért arra lett állítva"
+
+# Withdraw Command
+withdraw_amount_positive: "&cAz összegnek nagyobbnak kell lennie, mint 0"
+withdraw_limit_error: "&cNem vonhatsz ki ennyi szívet! Legalább 1 szívednek maradnia kell"
+withdraw_success: "&aSikeresen kivontál {amount} szívet"
+
+# Reload Command
+reload_success: "&aKonfiguráció újratöltve"
+
+# Combat Log
+combat_start: "&cHarcba kerültél!"
+combat_end: "&aMár nem vagy harcban!"
+
+# Player Death
+death_loss: "&cElvesztettél egy szívet"
+death_gain: "&aSzereztél egy szívet"
+
+# Heart Item
+heart_consumed: "&a+1 szív"
