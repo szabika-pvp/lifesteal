@@ -13,6 +13,7 @@ restrictions:
   block-anchor-explosions: true
   block-crystal-explosions: true
   disable-totems: true
+  ban-netherite-armor: true
 
   mace-max-damage: 16.0 # 8 hearts
   tnt-minecart-max-damage: 18.0 # 9 hearts
