@@ -34,7 +34,13 @@ public class PlayerDeathListener implements Listener {
         AttributeInstance maxHealthAttribute = player.getAttribute(Attribute.MAX_HEALTH);
 
         if (maxHealthAttribute == null) return;
-        if (maxHealthAttribute.getBaseValue() <= 2) return;
+        
+        if (maxHealthAttribute.getBaseValue() <= 2.0) {
+            net.kyori.adventure.text.Component banReason = messageManager.getMessage(player, "ban_reason", null);
+            player.ban(banReason.toString(), (java.time.Duration) null, "Lifesteal");
+            player.kick(banReason);
+            return;
+        }
 
         double currentMaxHealth = maxHealthAttribute.getBaseValue();
         double newMaxHealth = currentMaxHealth - 2.0;

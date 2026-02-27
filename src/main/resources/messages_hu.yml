@@ -4,6 +4,7 @@ player_not_found: "&cNem található ez a játékos"
 command_player_only: "&cEzt a parancsot csak játékos használhatja"
 invalid_number: "&cÉrvénytelen érték, kérlek számot adj meg"
 usage_hearts: "&cHasználat: /hearts <add|set|remove> <player> <amount>"
+ban_reason: "&cElfogyott az összes szíved!"
 
 # Dimension Locking
 dimension_locked_nether: "&cA Nether le van zárva"
