@@ -2,8 +2,6 @@ package hu.szatomi.lifesteal.Listeners;
 
 import hu.szatomi.lifesteal.Lifesteal;
 import hu.szatomi.lifesteal.MessageManager;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
@@ -36,14 +34,7 @@ public class PlayerDeathListener implements Listener {
         AttributeInstance maxHealthAttribute = player.getAttribute(Attribute.MAX_HEALTH);
 
         if (maxHealthAttribute == null) return;
-        
-        if (maxHealthAttribute.getBaseValue() <= 2.0) {
-            Component banReason = messageManager.getMessage(player, "ban_reason", null);
-            String banReasonString = LegacyComponentSerializer.legacySection().serialize(banReason);
-            player.ban(banReasonString, (java.time.Duration) null, "Lifesteal");
-            player.kick(banReason);
-            return;
-        }
+        if (maxHealthAttribute.getBaseValue() <= 2) return;
 
         double currentMaxHealth = maxHealthAttribute.getBaseValue();
         double newMaxHealth = currentMaxHealth - 2.0;
