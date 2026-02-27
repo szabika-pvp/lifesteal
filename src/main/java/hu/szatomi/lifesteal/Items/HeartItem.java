@@ -27,7 +27,7 @@ public class HeartItem {
         ItemStack item = new ItemStack(Material.NETHER_STAR);
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            meta.displayName(Component.text("Szív")
+            meta.displayName(Component.text("Heart")
                     .color(Colors.RED)
                     .decoration(TextDecoration.ITALIC, false));
             meta.getPersistentDataContainer().set(HEART_KEY, PersistentDataType.BYTE, (byte) 1);

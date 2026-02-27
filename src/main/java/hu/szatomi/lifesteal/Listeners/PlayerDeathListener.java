@@ -1,8 +1,7 @@
 package hu.szatomi.lifesteal.Listeners;
 
-import hu.szatomi.lifesteal.Colors;
 import hu.szatomi.lifesteal.Lifesteal;
-import net.kyori.adventure.text.Component;
+import hu.szatomi.lifesteal.MessageManager;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
@@ -13,9 +12,11 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 public class PlayerDeathListener implements Listener {
 
     private final Lifesteal plugin;
+    private final MessageManager messageManager;
 
-    public PlayerDeathListener(Lifesteal plugin) {
+    public PlayerDeathListener(Lifesteal plugin, MessageManager messageManager) {
         this.plugin = plugin;
+        this.messageManager = messageManager;
     }
 
     @EventHandler
@@ -39,7 +40,7 @@ public class PlayerDeathListener implements Listener {
         double newMaxHealth = currentMaxHealth - 2.0;
 
         maxHealthAttribute.setBaseValue(newMaxHealth);
-        player.sendMessage(Component.text("Elvesztettél egy szívet!").color(Colors.RED));
+        messageManager.sendMessage(player, "death_loss");
     }
 
     private void handleKiller(Player player) {
@@ -54,6 +55,6 @@ public class PlayerDeathListener implements Listener {
 
         double newMaxHealth = Math.min(currentMaxHealth + 2.0, maxHealthLimit);
         maxHealthAttribute.setBaseValue(newMaxHealth);
-        player.sendMessage(Component.text("Szereztél egy szívet!").color(Colors.GREEN));
+        messageManager.sendMessage(player, "death_gain");
     }
 }

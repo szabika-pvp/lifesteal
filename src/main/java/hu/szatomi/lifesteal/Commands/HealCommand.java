@@ -1,7 +1,6 @@
 package hu.szatomi.lifesteal.Commands;
 
-import hu.szatomi.lifesteal.Colors;
-import hu.szatomi.lifesteal.MessageTemplate;
+import hu.szatomi.lifesteal.MessageManager;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
@@ -20,24 +19,30 @@ import java.util.stream.Collectors;
 
 public class HealCommand implements CommandExecutor, TabCompleter {
 
+    private final MessageManager messageManager;
+
+    public HealCommand(MessageManager messageManager) {
+        this.messageManager = messageManager;
+    }
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!sender.hasPermission("lifesteal.admin")) {
-            sender.sendMessage(MessageTemplate.NO_PERMISSION);
+            messageManager.sendMessage(sender, "no_permission");
             return true;
         }
 
         Player target;
         if (args.length == 0) {
             if (!(sender instanceof Player)) {
-                sender.sendMessage(Component.text("Ezt a parancsot csak játékos használhatja paraméter nélkül!", Colors.RED));
+                messageManager.sendMessage(sender, "command_player_only");
                 return true;
             }
             target = (Player) sender;
         } else {
             target = Bukkit.getPlayer(args[0]);
             if (target == null) {
-                sender.sendMessage(MessageTemplate.PLAYER_NOT_FOUND);
+                messageManager.sendMessage(sender, "player_not_found");
                 return true;
             }
         }

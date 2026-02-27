@@ -1,9 +1,7 @@
 package hu.szatomi.lifesteal.Commands;
 
-import hu.szatomi.lifesteal.Colors;
 import hu.szatomi.lifesteal.Lifesteal;
-import hu.szatomi.lifesteal.MessageTemplate;
-import net.kyori.adventure.text.Component;
+import hu.szatomi.lifesteal.MessageManager;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -15,24 +13,27 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class HeartsCommand implements TabExecutor {
 
     private final Lifesteal plugin;
+    private final MessageManager messageManager;
 
-    public HeartsCommand(Lifesteal plugin) {
+    public HeartsCommand(Lifesteal plugin, MessageManager messageManager) {
         this.plugin = plugin;
+        this.messageManager = messageManager;
     }
 
     @Override
     public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (!sender.isOp()) {
-            sender.sendMessage(MessageTemplate.NO_PERMISSION);
+            messageManager.sendMessage(sender, "no_permission");
             return true;
         }
 
         if (args.length < 3) {
-            sender.sendMessage(Component.text("Használat: /hearts <add|set|remove> <player> <amount>").color(Colors.RED));
+            messageManager.sendMessage(sender, "usage_hearts");
             return true;
         }
 
@@ -42,7 +43,7 @@ public class HeartsCommand implements TabExecutor {
 
         Player target = Bukkit.getPlayer(playerName);
         if (target == null) {
-            sender.sendMessage(MessageTemplate.PLAYER_NOT_FOUND);
+            messageManager.sendMessage(sender, "player_not_found");
             return true;
         }
 
@@ -50,7 +51,7 @@ public class HeartsCommand implements TabExecutor {
         try {
             amount = Integer.parseInt(amountStr);
         } catch (NumberFormatException e) {
-            sender.sendMessage(Component.text("Érvénytelen érték, kérlek számot adj meg").color(Colors.RED));
+            messageManager.sendMessage(sender, "invalid_number");
             return true;
         }
         
@@ -59,7 +60,7 @@ public class HeartsCommand implements TabExecutor {
 
         AttributeInstance maxHealthAttribute = target.getAttribute(Attribute.MAX_HEALTH);
         if (maxHealthAttribute == null) {
-            sender.sendMessage(Component.text("A player 'MAX_HEALTH'-je nem elérhető").color(Colors.RED));
+            messageManager.sendMessage(sender, "hearts_max_health_unavailable");
             return true;
         }
 
@@ -73,31 +74,31 @@ public class HeartsCommand implements TabExecutor {
         switch (action) {
             case "add":
                 newMaxHealth = currentMaxHealth + healthAmount;
-                sender.sendMessage(Component.text(amount + " szív adva " + target.getName() + " játékosnak").color(Colors.GREEN));
+                messageManager.sendMessage(sender, "hearts_added", Map.of("amount", String.valueOf(amount), "player", target.getName()));
                 break;
             case "set":
                 newMaxHealth = healthAmount;
-                sender.sendMessage(Component.text(target.getName() + " játékos szívei beállítva " + amount + " szívre").color(Colors.GREEN));
+                messageManager.sendMessage(sender, "hearts_set", Map.of("amount", String.valueOf(amount), "player", target.getName()));
                 break;
             case "remove":
                 newMaxHealth = currentMaxHealth - healthAmount;
-                sender.sendMessage(Component.text(amount + " szív elvéve " + target.getName() + " játékostól").color(Colors.GREEN));
+                messageManager.sendMessage(sender, "hearts_removed", Map.of("amount", String.valueOf(amount), "player", target.getName()));
                 break;
             default:
-                sender.sendMessage(Component.text("Ismeretlen parancs: " + action).color(Colors.RED));
+                messageManager.sendMessage(sender, "hearts_unknown_subcommand", Map.of("subcommand", action));
                 return true;
         }
 
         // Apply min cap (1 heart / 2 HP)
         if (newMaxHealth < 2.0) {
             newMaxHealth = 2.0; 
-            sender.sendMessage(Component.text("Az szívek száma elérte a minimumot (1), ezért arra lett állítva.").color(Colors.YELLOW));
+            messageManager.sendMessage(sender, "hearts_min_limit");
         }
         
         // Apply max cap from config
         if (newMaxHealth > maxHealthCap) {
             newMaxHealth = maxHealthCap;
-            sender.sendMessage(Component.text("Az szívek száma elérte a maximumot (" + configMaxHearts + "), ezért arra lett állítva.").color(Colors.YELLOW));
+            messageManager.sendMessage(sender, "hearts_max_limit", Map.of("max", String.valueOf(configMaxHearts)));
         }
 
         maxHealthAttribute.setBaseValue(newMaxHealth);

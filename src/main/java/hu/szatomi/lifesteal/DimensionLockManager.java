@@ -28,9 +28,6 @@ public class DimensionLockManager {
 
         this.netherUnlockTime = parseDate(config.getString("dimensions.nether.unlock-date"));
         this.endUnlockTime = parseDate(config.getString("dimensions.the_end.unlock-date"));
-        
-        this.netherMessage = config.getString("dimensions.nether.locked-message", "A Nether le van zárva!");
-        this.endMessage = config.getString("dimensions.the_end.locked-message", "§Az End le van zárva!");
     }
 
     private LocalDateTime parseDate(String dateStr) {
@@ -45,27 +42,23 @@ public class DimensionLockManager {
 
     public boolean isLocked(World world) {
         if (world == null) return false;
-        
+        return isLocked(world.getEnvironment());
+    }
+
+    public boolean isLocked(World.Environment env) {
         LocalDateTime now = LocalDateTime.now();
-        
-        if (world.getEnvironment() == World.Environment.NETHER) {
+        if (env == World.Environment.NETHER) {
             return now.isBefore(netherUnlockTime);
         }
-        
-        if (world.getEnvironment() == World.Environment.THE_END) {
+        if (env == World.Environment.THE_END) {
             return now.isBefore(endUnlockTime);
         }
-        
         return false;
     }
 
-    public String getLockedMessage(World world) {
-        if (world.getEnvironment() == World.Environment.NETHER) {
-            return netherMessage;
-        }
-        if (world.getEnvironment() == World.Environment.THE_END) {
-            return endMessage;
-        }
-        return "§cEz a dimenzió le van zárva";
+    public LocalDateTime getUnlockTime(World.Environment env) {
+        if (env == World.Environment.NETHER) return netherUnlockTime;
+        if (env == World.Environment.THE_END) return endUnlockTime;
+        return null;
     }
 }

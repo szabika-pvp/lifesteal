@@ -1,8 +1,7 @@
 package hu.szatomi.lifesteal.Listeners;
 
-import hu.szatomi.lifesteal.Colors;
 import hu.szatomi.lifesteal.Lifesteal;
-import net.kyori.adventure.text.Component;
+import hu.szatomi.lifesteal.MessageManager;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -20,21 +19,27 @@ import java.util.UUID;
 public class CombatLogListener implements Listener {
 
     private final Lifesteal plugin;
+    private final MessageManager messageManager;
     private final Map<UUID, BukkitTask> combatTasks = new HashMap<>();
 
-    public CombatLogListener(Lifesteal plugin) {
+    public CombatLogListener(Lifesteal plugin, MessageManager messageManager) {
         this.plugin = plugin;
+        this.messageManager = messageManager;
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-        if (!(event.getEntity() instanceof Player victim)) return;
+        if (!(event.getEntity() instanceof Player)) return;
+        Player victim = (Player) event.getEntity();
 
         Player attacker = null;
-        if (event.getDamager() instanceof Player p) {
-            attacker = p;
-        } else if (event.getDamager() instanceof Projectile projectile && projectile.getShooter() instanceof Player p) {
-            attacker = p;
+        if (event.getDamager() instanceof Player) {
+            attacker = (Player) event.getDamager();
+        } else if (event.getDamager() instanceof Projectile) {
+            Projectile projectile = (Projectile) event.getDamager();
+            if (projectile.getShooter() instanceof Player) {
+                attacker = (Player) projectile.getShooter();
+            }
         }
 
         if (attacker == null || attacker.equals(victim)) return;
@@ -49,8 +54,10 @@ public class CombatLogListener implements Listener {
         UUID uuid = player.getUniqueId();
 
         if (combatTasks.containsKey(uuid)) {
-            combatTasks.get(uuid).cancel();
-            combatTasks.remove(uuid);
+            BukkitTask task = combatTasks.remove(uuid);
+            if (task != null) task.cancel();
+            
+            // Combat log penalty: Kill player
             player.setHealth(0);
         }
     }
@@ -59,8 +66,8 @@ public class CombatLogListener implements Listener {
     public void onPlayerDeath(PlayerDeathEvent event) {
         UUID uuid = event.getEntity().getUniqueId();
         if (combatTasks.containsKey(uuid)) {
-            combatTasks.get(uuid).cancel();
-            combatTasks.remove(uuid);
+            BukkitTask task = combatTasks.remove(uuid);
+            if (task != null) task.cancel();
         }
     }
 
@@ -68,14 +75,17 @@ public class CombatLogListener implements Listener {
         UUID uuid = player.getUniqueId();
 
         if (combatTasks.containsKey(uuid)) {
-            combatTasks.get(uuid).cancel();
+            BukkitTask task = combatTasks.get(uuid);
+            if (task != null) task.cancel();
         } else {
-            player.sendMessage(Component.text("Harcba kerültél!").color(Colors.RED));
+            messageManager.sendMessage(player, "combat_start");
         }
 
         BukkitTask task = plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
-            player.sendMessage(Component.text("Már nem vagy harcban!").color(Colors.GREEN));
             combatTasks.remove(uuid);
+            if (player.isOnline()) {
+                messageManager.sendMessage(player, "combat_end");
+            }
         }, 200L); // 10 seconds = 200 ticks
 
         combatTasks.put(uuid, task);

@@ -19,33 +19,35 @@ public final class Lifesteal extends JavaPlugin {
 
         saveDefaultConfig();
 
+        MessageManager messageManager = new MessageManager(this);
+
         getServer().getPluginManager().registerEvents(new BannedItemsListener(this), this);
-        getServer().getPluginManager().registerEvents(new PlayerDeathListener(this), this);
-        getServer().getPluginManager().registerEvents(new CombatLogListener(this), this);
-        getServer().getPluginManager().registerEvents(new HeartListener(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerDeathListener(this, messageManager), this);
+        getServer().getPluginManager().registerEvents(new CombatLogListener(this, messageManager), this);
+        getServer().getPluginManager().registerEvents(new HeartListener(this, messageManager), this);
 
         DimensionLockManager lockManager = new DimensionLockManager(this);
-        getServer().getPluginManager().registerEvents(new DimensionListener(lockManager), this);
+        getServer().getPluginManager().registerEvents(new DimensionListener(lockManager, messageManager), this);
 
         HeartItem heartItem = new HeartItem(this);
         heartItem.registerRecipe();
         
         if (getCommand("lifestealreload") != null) {
-            getCommand("lifestealreload").setExecutor(new ReloadCommand(this, lockManager));
+            getCommand("lifestealreload").setExecutor(new ReloadCommand(this, lockManager, messageManager));
         }
         
         if (getCommand("hearts") != null) {
-            getCommand("hearts").setExecutor(new HeartsCommand(this));
+            getCommand("hearts").setExecutor(new HeartsCommand(this, messageManager));
         }
 
         if (getCommand("heal") != null) {
-            HealCommand healCommand = new HealCommand();
+            HealCommand healCommand = new HealCommand(messageManager);
             getCommand("heal").setExecutor(healCommand);
             getCommand("heal").setTabCompleter(healCommand);
         }
 
         if (getCommand("withdraw") != null) {
-            WithdrawCommand withdrawCommand = new WithdrawCommand(this);
+            WithdrawCommand withdrawCommand = new WithdrawCommand(this, messageManager);
             getCommand("withdraw").setExecutor(withdrawCommand);
             getCommand("withdraw").setTabCompleter(withdrawCommand);
         }

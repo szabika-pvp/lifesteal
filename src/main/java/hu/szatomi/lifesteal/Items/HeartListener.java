@@ -1,8 +1,7 @@
 package hu.szatomi.lifesteal.Items;
 
-import hu.szatomi.lifesteal.Colors;
 import hu.szatomi.lifesteal.Lifesteal;
-import net.kyori.adventure.text.Component;
+import hu.szatomi.lifesteal.MessageManager;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -19,9 +18,11 @@ import org.bukkit.persistence.PersistentDataType;
 public class HeartListener implements Listener {
 
     private final Lifesteal plugin;
+    private final MessageManager messageManager;
 
-    public HeartListener(Lifesteal plugin) {
+    public HeartListener(Lifesteal plugin, MessageManager messageManager) {
         this.plugin = plugin;
+        this.messageManager = messageManager;
     }
 
     @EventHandler
@@ -59,6 +60,6 @@ public class HeartListener implements Listener {
         item.setAmount(item.getAmount() - 1);
         player.setCooldown(Material.NETHER_STAR, 20);
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 1.0f, 1.0f);
-        player.sendMessage(Component.text("+1 szív").color(Colors.GREEN));
+        messageManager.sendMessage(player, "heart_consumed");
     }
 }
