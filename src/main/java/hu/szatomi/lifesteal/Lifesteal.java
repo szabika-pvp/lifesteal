@@ -12,6 +12,8 @@ import hu.szatomi.lifesteal.Listeners.DimensionListener;
 import hu.szatomi.lifesteal.Listeners.PlayerDeathListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Objects;
+
 public final class Lifesteal extends JavaPlugin {
 
     @Override
@@ -33,23 +35,23 @@ public final class Lifesteal extends JavaPlugin {
         heartItem.registerRecipe();
         
         if (getCommand("lifestealreload") != null) {
-            getCommand("lifestealreload").setExecutor(new ReloadCommand(this, lockManager, messageManager));
+            Objects.requireNonNull(getCommand("lifestealreload")).setExecutor(new ReloadCommand(this, lockManager, messageManager));
         }
         
         if (getCommand("hearts") != null) {
-            getCommand("hearts").setExecutor(new HeartsCommand(this, messageManager));
+            Objects.requireNonNull(getCommand("hearts")).setExecutor(new HeartsCommand(this, messageManager));
         }
 
         if (getCommand("heal") != null) {
             HealCommand healCommand = new HealCommand(messageManager);
-            getCommand("heal").setExecutor(healCommand);
-            getCommand("heal").setTabCompleter(healCommand);
+            Objects.requireNonNull(getCommand("heal")).setExecutor(healCommand);
+            Objects.requireNonNull(getCommand("heal")).setTabCompleter(healCommand);
         }
 
         if (getCommand("withdraw") != null) {
             WithdrawCommand withdrawCommand = new WithdrawCommand(this, messageManager);
-            getCommand("withdraw").setExecutor(withdrawCommand);
-            getCommand("withdraw").setTabCompleter(withdrawCommand);
+            Objects.requireNonNull(getCommand("withdraw")).setExecutor(withdrawCommand);
+            Objects.requireNonNull(getCommand("withdraw")).setTabCompleter(withdrawCommand);
         }
         
         getLogger().info("LIFESTEAL PLUGIN BEKAPCSOLVA.");

@@ -13,8 +13,6 @@ public class DimensionLockManager {
     private final Lifesteal plugin;
     private LocalDateTime netherUnlockTime;
     private LocalDateTime endUnlockTime;
-    private String netherMessage;
-    private String endMessage;
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 

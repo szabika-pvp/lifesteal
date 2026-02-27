@@ -29,14 +29,12 @@ public class CombatLogListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-        if (!(event.getEntity() instanceof Player)) return;
-        Player victim = (Player) event.getEntity();
+        if (!(event.getEntity() instanceof Player victim)) return;
 
         Player attacker = null;
         if (event.getDamager() instanceof Player) {
             attacker = (Player) event.getDamager();
-        } else if (event.getDamager() instanceof Projectile) {
-            Projectile projectile = (Projectile) event.getDamager();
+        } else if (event.getDamager() instanceof Projectile projectile) {
             if (projectile.getShooter() instanceof Player) {
                 attacker = (Player) projectile.getShooter();
             }

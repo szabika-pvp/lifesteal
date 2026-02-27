@@ -1,7 +1,6 @@
 package hu.szatomi.lifesteal.Commands;
 
 import hu.szatomi.lifesteal.MessageManager;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;

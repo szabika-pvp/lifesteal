@@ -20,23 +20,20 @@ import java.util.Map;
 
 public class WithdrawCommand implements CommandExecutor, TabCompleter {
 
-    private final Lifesteal plugin;
     private final MessageManager messageManager;
     private final HeartItem heartItem;
 
     public WithdrawCommand(Lifesteal plugin, MessageManager messageManager) {
-        this.plugin = plugin;
         this.messageManager = messageManager;
         this.heartItem = new HeartItem(plugin);
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             messageManager.sendMessage(sender, "withdraw_player_only");
             return true;
         }
-        Player player = (Player) sender;
 
         int amount = 1;
         if (args.length > 0) {

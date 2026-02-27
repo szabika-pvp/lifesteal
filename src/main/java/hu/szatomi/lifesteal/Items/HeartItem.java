@@ -46,15 +46,15 @@ public class HeartItem {
         List<String> row2 = plugin.getConfig().getStringList("recipes.heart.row2");
         List<String> row3 = plugin.getConfig().getStringList("recipes.heart.row3");
 
-        setIngredient(recipe, 'A', row1.size() > 0 ? row1.get(0) : "COMMAND_BLOCK");
+        setIngredient(recipe, 'A', !row1.isEmpty() ? row1.get(0) : "COMMAND_BLOCK");
         setIngredient(recipe, 'B', row1.size() > 1 ? row1.get(1) : "COMMAND_BLOCK");
         setIngredient(recipe, 'C', row1.size() > 2 ? row1.get(2) : "COMMAND_BLOCK");
 
-        setIngredient(recipe, 'D', row2.size() > 0 ? row2.get(0) : "COMMAND_BLOCK");
+        setIngredient(recipe, 'D', !row2.isEmpty() ? row2.get(0) : "COMMAND_BLOCK");
         setIngredient(recipe, 'E', row2.size() > 1 ? row2.get(1) : "COMMAND_BLOCK");
         setIngredient(recipe, 'F', row2.size() > 2 ? row2.get(2) : "COMMAND_BLOCK");
 
-        setIngredient(recipe, 'G', row3.size() > 0 ? row3.get(0) : "COMMAND_BLOCK");
+        setIngredient(recipe, 'G', !row3.isEmpty() ? row3.get(0) : "COMMAND_BLOCK");
         setIngredient(recipe, 'H', row3.size() > 1 ? row3.get(1) : "COMMAND_BLOCK");
         setIngredient(recipe, 'I', row3.size() > 2 ? row3.get(2) : "COMMAND_BLOCK");
 
